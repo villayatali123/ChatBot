@@ -43,15 +43,16 @@ const openai = require("./config/openAi");
 
 const Message = require("./models/Message");
 
-
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
-
 //route to get and delete messages
 const messsageRoute= require('./routes/messageRoute')
 app.use('/api/v1',messsageRoute)
 
+// Setup a default catch-all route that sends back a welcome message in JSON format.
+app.get('*', (req, res) =>
+    res.status(200).send({
+        message: 'Welcome to the beginning of nothingness.',
+    })
+);
 
 const port = process.env.PORT || 3000;
 
