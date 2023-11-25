@@ -30,13 +30,12 @@ const server = http.createServer(app);
 const io = socketIO(server, {
   pingTime: 60000,
   cors: {
-    origin: '*',
+    origin: "*",
   },
 });
 
 // MongoDB connection
 const connectDB = require("./db/connect");
-
 
 // OpenAI API setup
 const openai = require("./config/openAi");
@@ -44,14 +43,15 @@ const openai = require("./config/openAi");
 const Message = require("./models/Message");
 
 //route to get and delete messages
-const messsageRoute= require('./routes/messageRoute')
-app.use('/api/v1',messsageRoute)
+const messsageRoute = require("./routes/messageRoute");
+app.use("/api/v1", messsageRoute);
+app.use("/api/v1", messsageRoute);
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-app.get('*', (req, res) =>
-    res.status(200).send({
-        message: 'Welcome to the beginning of nothingness.',
-    })
+app.get("*", (req, res) =>
+  res.status(200).send({
+    message: "Welcome to the beginning of nothingness.",
+  })
 );
 
 const port = process.env.PORT || 3000;
@@ -63,19 +63,19 @@ io.on("connection", (socket) => {
   // Event when a user asks a question
   socket.on("ask-question", async (data) => {
     try {
-      const { message } = data;
-
-      // Save user message to MongoDB
-      const userMessage = new Message({ sender: "User", message });
-      await userMessage.save();
+      const { userPrompt } = data;
 
       // Make a request to OpenAI API
       const completion = await openai.default.chat.completions.create({
-        messages: [{ role: "user", content: message }],
+        messages: [{ role: "user", content: userPrompt }],
         model: "gpt-3.5-turbo",
       });
-      // console.log(completion);
+    
       const answer = completion.choices[0].message;
+
+      // Save user message to MongoDB
+      const userMessage = new Message({ sender: "User", userPrompt });
+      await userMessage.save();
 
       // Save bot response to MongoDB
       console.log(answer);
