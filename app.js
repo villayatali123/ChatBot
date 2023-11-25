@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-require("express-async-errors");
 
 const http = require("http");
 const socketIO = require("socket.io");
@@ -8,6 +7,8 @@ const socketIO = require("socket.io");
 const cors = require("cors");
 
 const app = express();
+
+app.use(express.json());
 
 app.use(cors());
 
@@ -44,7 +45,6 @@ const Message = require("./models/Message");
 
 //route to get and delete messages
 const messsageRoute = require("./routes/messageRoute");
-app.use("/api/v1", messsageRoute);
 app.use("/api/v1", messsageRoute);
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.

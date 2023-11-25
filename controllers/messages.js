@@ -26,8 +26,12 @@ const deleteMessage = async (req, res) => {
 
 const getMessage = async (req, res) => {
   try {
+    console.log("=====>",req.body);
     const { userPrompt } = req.body;
-
+    if(!userPrompt)
+    {
+      return res.send("Please provide userPrompt")
+    }
     // Make a request to OpenAI API
     const completion = await openai.default.chat.completions.create({
       messages: [{ role: "user", content: userPrompt }],

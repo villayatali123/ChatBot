@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "villayat",
   "license": "ISC",
@@ -12,7 +12,6 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-async-errors": "^3.1.1",
     "http-status-codes": "^2.1.4",
     "mongoose": "^5.13.2",
     "openai": "^4.20.0",
