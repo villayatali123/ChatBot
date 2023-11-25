@@ -1,5 +1,7 @@
 require("dotenv").config();
 const express = require("express");
+require("express-async-errors");
+
 const http = require("http");
 const socketIO = require("socket.io");
 
@@ -21,8 +23,10 @@ const allowCrossDomain = (req, res, next) => {
 };
 app.use(allowCrossDomain);
 
-
+//create server
 const server = http.createServer(app);
+
+//create socketIo
 const io = socketIO(server, {
   pingTime: 60000,
   cors: {
@@ -39,6 +43,7 @@ const openai = require("./config/openAi");
 
 const Message = require("./models/Message");
 
+
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
@@ -47,6 +52,8 @@ app.get("/", (req, res) => {
 const messsageRoute= require('./routes/messageRoute')
 app.use('/api/v1',messsageRoute)
 
+
+const port = process.env.PORT || 3000;
 
 // Socket.io communication
 io.on("connection", (socket) => {
@@ -90,9 +97,9 @@ io.on("connection", (socket) => {
   });
 });
 
-// Server listening on port 3000
-server.listen(process.env.PORT, async () => {
+// Server listening on port
+server.listen(port, async () => {
   await connectDB(process.env.MONGO_URI);
   console.log("connected to MongoDB");
-  console.log(`Server running on port ${process.env.PORT}`);
+  console.log(`Server running on port ${port}`);
 });

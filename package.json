@@ -1,12 +1,12 @@
 {
-  "name": "06-jobs-api",
+  "name": "chatbot-api",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
-  "author": "",
+  "author": "villayat",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

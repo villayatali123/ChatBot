@@ -1,6 +1,7 @@
 const Message = require("../models/Message");
 
 const { StatusCodes } = require("http-status-codes");
+
 const getMessage = async (req, res) => {
 
   try {
@@ -9,7 +10,7 @@ const getMessage = async (req, res) => {
     res.status(StatusCodes.OK).json({ message, count: message.length });
   } catch (error) {
     console.log(error);
-    res.status(400).send(error);
+    res.status(StatusCodes.BAD_REQUEST).send(error);
   }
 };
 
@@ -21,7 +22,7 @@ const deleteMessage = async (req, res) => {
     res.status(StatusCodes.OK).json({ message: "deleted all data" });
   } catch (error) {
     console.log(error);
-    res.status(400).send(error);
+    res.status(StatusCodes.BAD_REQUEST).send(error);
   }
 };
 
