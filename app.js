@@ -30,7 +30,7 @@ const server = http.createServer(app);
 const io = socketIO(server, {
   pingTime: 60000,
   cors: {
-    origin: "http://127.0.0.1:5500",
+    origin: "https://chatbot-7574.netlify.app/",
   },
 });
 
