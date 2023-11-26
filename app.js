@@ -70,23 +70,22 @@ io.on("connection", (socket) => {
         messages: [{ role: "user", content: userPrompt }],
         model: "gpt-3.5-turbo",
       });
-    
+
       const answer = completion.choices[0].message;
 
+      //if everything goes right , save the data to DB
+
       // Save user message to MongoDB
-      const userMessage = new Message({ sender: "User", userPrompt });
+      const userMessage = new Message({ sender: "User", message: userPrompt });
       await userMessage.save();
 
       // Save bot response to MongoDB
-      console.log(answer);
-      const botMessage = new Message({
-        sender: "Bot",
-        message: answer.content,
-      });
+      const botMessage = new Message({ sender: "Bot", message: answer.content});
       await botMessage.save();
 
       // Emit bot response to frontend
       io.emit("bot-response", { answer });
+      
     } catch (err) {
       console.error("Error asking OpenAI:", err);
     }
